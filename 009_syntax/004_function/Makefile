@@ -1,0 +1,20 @@
+A = a b C
+B = $(foreach f, $(A), $(f).o)
+C = a b c d/
+D = $(filter %/, $(C))
+E = $(filter-out %/, $(C))
+
+files = $(wildcard *.c)
+files2 = a.c b.c c.c d.c e.c
+# 取出 files2 中真实存在的文件
+files3 = $(wildcard $(files2))
+
+dep_files = $(patsubst %.c, %.d, $(files2))
+all:
+	echo B = $(B)
+	echo D = $(D)
+	echo E = $(E)
+	echo files = $(files)
+	echo files2 = $(files2)
+	echo files3 = $(files3)
+	echo dep_files = $(dep_files)
