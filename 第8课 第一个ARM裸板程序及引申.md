@@ -91,9 +91,10 @@ LDR R0, = 0x12345678 /* 伪指令，会被拆分为几条真正的ARM指令 R0 =
   */
 
 _start:
-    ldr r1, = 56000050
+    ldr r1, = 0x56000050
     ldr r0, = 0x100
     @ mov r0, #0x100
+    str r0, [r1]
 
  /* 
   * 设置GPF4输出高电平
@@ -101,6 +102,7 @@ _start:
   */
     ldr r1, = 0x56000054
     ldr r0, = 0
+    str r0, [r1]
 
 /*
  * 死循环
@@ -262,6 +264,7 @@ _start:
     ldr r1, = 56000050
     @ldr r0, = 0x100
     ldr r0, = 0x500
+    str r0, [r1]
 ```
 
 查看反汇编，我们直接修改这段`e3a00c01`这段机器码，将0x100修改成0x500。要先弄明白这段机器码中哪些位代表0x100，查看`ARM`架构手册`ARM Architecture Reference Manual.pdf`，`MOV`指令如下：
